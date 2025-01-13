@@ -1,0 +1,33 @@
+class Handler:
+    def __init__(self):
+        self._successor = None
+
+    def set_successor(self, successor):
+        self._successor = successor
+
+    def handle_request(self, request):
+        if self._successor:
+            self._successor.handle_request(request)
+
+# Concrete Handlers
+class ConcreteHandlerA(Handler):
+    def handle_request(self, request):
+        if request == "A":
+            print("ConcreteHandlerA handling request A")
+        else:
+            super().handle_request(request)
+class ConcreteHandlerB(Handler):
+    def handle_request(self, request):
+        if request == "B":
+            print("ConcreteHandlerB handling request B")
+        else:
+            super().handle_request(request)
+# Usage example
+if __name__ == "__main__":
+    handlerA = ConcreteHandlerA()
+    handlerB = ConcreteHandlerB()
+    handlerA.set_successor(handlerB)
+    # Test with various requests
+    handlerA.handle_request("A")  # Output: ConcreteHandlerA handling request A
+    handlerA.handle_request("B")  # Output: ConcreteHandlerB handling request B
+    handlerA.handle_request("C")  # No output, as no handler processes "C"
